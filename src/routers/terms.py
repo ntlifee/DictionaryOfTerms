@@ -19,7 +19,7 @@ async def add_term(
 
 
 @router.get("/terms")
-async def add_term(
+async def get_terms(
         term_services: TermsService = Depends(terms_services)
 ) -> list[TermSchema]:
     terms = await term_services.get_all()

@@ -9,6 +9,8 @@ class Settings(BaseSettings):
     DB_PASSWORD: str = "password"
     SERVICE_HOST: str = "0.0.0.0"
     SERVICE_PORT: int = 3000
+    IMAGES_DIR: str = "static/images"
+    AUDIO_DIR: str = "static/audio"
     model_config = SettingsConfigDict(
         env_file="../.env",
         env_file_encoding="utf-8"

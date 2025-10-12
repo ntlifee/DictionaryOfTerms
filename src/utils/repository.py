@@ -5,6 +5,8 @@ from src.database import async_session_maker
 
 
 class AbstractRepository(ABC):
+    model = None
+
     @abstractmethod
     async def add_one(self, data: dict):
         raise NotImplemented
@@ -23,8 +25,6 @@ class AbstractRepository(ABC):
 
 
 class SQLAlchemyRepository(AbstractRepository):
-    model = None
-
     async def add_one(self, data: dict) -> int:
         async with async_session_maker() as session:
             stmt = insert(self.model).values(**data).returning(self.model.id)
