@@ -3,4 +3,4 @@ from src.routers.terms import router as term_routers
 
 router = APIRouter()
 
-router.include_router(term_routers)
+router.include_router(term_routers, tags=['TermsApi'])

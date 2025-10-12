@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Mapped
 from src.database import Base, int_pk, str_null_true
-from src.schemas.term import Term as TermSchema
+from src.schemas.term import TermSchema
 
 
 class Term(Base):
