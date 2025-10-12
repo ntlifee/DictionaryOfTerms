@@ -13,6 +13,7 @@ from os.path import dirname, abspath
 sys.path.insert(0, dirname(dirname(abspath(__file__))))
 
 from src.database import DATABASE_URL, Base
+from src.models.term import Term
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

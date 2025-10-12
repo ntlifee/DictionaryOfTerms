@@ -29,7 +29,7 @@ class AbstractRepository(ABC):
 
 
 class SQLAlchemyRepository(AbstractRepository):
-    async def add_one(self, data: dict) -> int:
+    async def add_one(self, data: dict) -> str:
         async with async_session_maker() as session:
             stmt = insert(self.model).values(**data).returning(self.model.id)
             res = await session.execute(stmt)
@@ -43,7 +43,7 @@ class SQLAlchemyRepository(AbstractRepository):
             res = [row[0].to_model() for row in res.all()]
             return res
 
-    async def get_by_id(self, item_id: int):
+    async def get_by_id(self, item_id: str):
         async with async_session_maker() as session:
             stmt = select(self.model).where(self.model.id == item_id)
             result = await session.execute(stmt)
@@ -52,14 +52,14 @@ class SQLAlchemyRepository(AbstractRepository):
                 return result.to_model()
             return result
 
-    async def delete(self, item_id: int) -> bool:
+    async def delete(self, item_id: str) -> bool:
         async with async_session_maker() as session:
             stmt = delete(self.model).where(self.model.id == item_id)
             res = await session.execute(stmt)
             await session.commit()
             return res.rowcount > 0
 
-    async def update(self, item_id: int, data: dict):
+    async def update(self, item_id: str, data: dict):
         async with async_session_maker() as session:
             stmt = update(self.model).where(self.model.id == item_id).values(**data).returning(self.model)
             res = await session.execute(stmt)

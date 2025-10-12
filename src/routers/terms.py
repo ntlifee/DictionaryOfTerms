@@ -13,7 +13,7 @@ router = APIRouter()
 async def add_term(
         term: TermAddSchema,
         term_services: TermsService = Depends(terms_services)
-) -> dict[str, int]:
+) -> dict[str, str]:
     term_id = await term_services.add_term(term)
     return {"term_id": term_id}
 
@@ -27,8 +27,8 @@ async def get_terms(
 
 
 @router.get("/terms/{term_id}")
-async def get_terms(
-        term_id: int,
+async def get_term(
+        term_id: str,
         term_services: TermsService = Depends(terms_services)
 ) -> TermSchema:
     term = await term_services.get_by_id(term_id=term_id)
@@ -44,7 +44,7 @@ async def get_terms(
 
 @router.delete("/terms/{term_id}")
 async def delete_term(
-        term_id: int,
+        term_id: str,
         term_services: TermsService = Depends(terms_services)
 ) -> dict[str, str]:
     res = await term_services.delete(item_id=term_id)
@@ -60,7 +60,7 @@ async def delete_term(
 
 @router.put("/terms/{term_id}")
 async def update_term(
-        term_id: int,
+        term_id: str,
         data: TermAddSchema = Body(),
         term_services: TermsService = Depends(terms_services)
 ) -> dict[str, str]:

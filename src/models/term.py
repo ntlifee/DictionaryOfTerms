@@ -1,10 +1,10 @@
 from sqlalchemy.orm import Mapped
-from src.database import Base, int_pk, str_null_true
+from src.database import Base, str_pk, str_null_true
 from src.schemas.term import TermSchema
 
 
 class Term(Base):
-    id: Mapped[int_pk]
+    id: Mapped[str_pk]
     name: Mapped[str]
     definition: Mapped[str]
     image_name: Mapped[str_null_true]

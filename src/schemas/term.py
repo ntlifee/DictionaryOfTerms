@@ -2,6 +2,10 @@ from typing import Optional
 from pydantic import BaseModel, Field
 
 
+class IdSchema(BaseModel):
+    id: str = Field(description="Идентификатор термина")
+
+
 class TermAddSchema(BaseModel):
     name: str = Field(description="Термин")
     definition: str = Field(description="Определение термина")
@@ -9,10 +13,6 @@ class TermAddSchema(BaseModel):
     audio_name: Optional[str] = Field(None, description="Название аудиофайла")
 
 
-class TermIdSchema(BaseModel):
-    id: int = Field(description="Идентификатор термина")
-
-
-class TermSchema(TermAddSchema, TermIdSchema):
+class TermSchema(TermAddSchema, IdSchema):
     class Config:
         from_attributes = True
