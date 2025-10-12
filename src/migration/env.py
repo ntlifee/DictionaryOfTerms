@@ -14,6 +14,8 @@ sys.path.insert(0, dirname(dirname(abspath(__file__))))
 
 from src.database import DATABASE_URL, Base
 from src.models.term import Term
+from src.models.image import Image
+from src.models.audio import Audio
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

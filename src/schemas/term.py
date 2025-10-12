@@ -9,8 +9,8 @@ class IdSchema(BaseModel):
 class TermAddSchema(BaseModel):
     name: str = Field(description="Термин")
     definition: str = Field(description="Определение термина")
-    image_name: Optional[str] = Field(None, description="Название изображения")
-    audio_name: Optional[str] = Field(None, description="Название аудиофайла")
+    image_id: Optional[str] = Field(None, description="Название изображения")
+    audio_id: Optional[str] = Field(None, description="Название аудиофайла")
 
 
 class TermSchema(TermAddSchema, IdSchema):
