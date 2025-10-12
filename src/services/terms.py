@@ -1,4 +1,4 @@
-from src.schemas.term import TermAddSchema
+from src.schemas.term import TermAddSchema, TermSchema
 
 from src.utils.repository import AbstractRepository
 
@@ -12,9 +12,13 @@ class TermsService:
         term_id = await self.term_repo.add_one(data=term_dict)
         return term_id
 
-    async def get_all(self) -> list:
+    async def get_all(self) -> list[TermSchema]:
         terms = await self.term_repo.find_all()
         return terms
+
+    async def get_by_id(self, term_id: int) -> TermSchema | None:
+        term = await self.term_repo.get_by_id(item_id=term_id)
+        return term
 
     async def delete(self, item_id: int) -> bool:
         res = await self.term_repo.delete(item_id=item_id)

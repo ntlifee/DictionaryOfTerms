@@ -26,6 +26,22 @@ async def get_terms(
     return terms
 
 
+@router.get("/terms/{term_id}")
+async def get_terms(
+        term_id: int,
+        term_services: TermsService = Depends(terms_services)
+) -> TermSchema:
+    term = await term_services.get_by_id(term_id=term_id)
+
+    if not term:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Термин с ID {term_id} не найден"
+        )
+
+    return term
+
+
 @router.delete("/terms/{term_id}")
 async def delete_term(
         term_id: int,

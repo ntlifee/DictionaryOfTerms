@@ -16,7 +16,11 @@ class AbstractRepository(ABC):
         raise NotImplemented
 
     @abstractmethod
-    async def delete(self, item_id: int) -> bool:
+    async def get_by_id(self, item_id):
+        raise NotImplemented
+
+    @abstractmethod
+    async def delete(self, item_id) -> bool:
         raise NotImplemented
 
     @abstractmethod
@@ -39,6 +43,15 @@ class SQLAlchemyRepository(AbstractRepository):
             res = [row[0].to_model() for row in res.all()]
             return res
 
+    async def get_by_id(self, item_id: int):
+        async with async_session_maker() as session:
+            stmt = select(self.model).where(self.model.id == item_id)
+            result = await session.execute(stmt)
+            result = result.scalar_one_or_none()
+            if result:
+                return result.to_model()
+            return result
+
     async def delete(self, item_id: int) -> bool:
         async with async_session_maker() as session:
             stmt = delete(self.model).where(self.model.id == item_id)
@@ -46,7 +59,7 @@ class SQLAlchemyRepository(AbstractRepository):
             await session.commit()
             return res.rowcount > 0
 
-    async def update(self, item_id, data: dict):
+    async def update(self, item_id: int, data: dict):
         async with async_session_maker() as session:
             stmt = update(self.model).where(self.model.id == item_id).values(**data).returning(self.model)
             res = await session.execute(stmt)
