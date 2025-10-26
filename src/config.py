@@ -12,7 +12,7 @@ class Settings(BaseSettings):
     SERVICE_HOST: str = "0.0.0.0"
     SERVICE_PORT: int = 3000
     IMAGES_DIR: str = "static/images"
-    AUDIO_DIR: str = "static/audio"
+    AUDIO_DIR: str = "static/audios"
     model_config = SettingsConfigDict(
         env_file=Path(__file__).parent.parent / ".env",
         env_file_encoding="utf-8"

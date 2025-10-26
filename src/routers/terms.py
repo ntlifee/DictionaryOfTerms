@@ -5,11 +5,12 @@ from fastapi import HTTPException, status
 from src.routers.dependencies import terms_services
 from src.schemas.term import TermAddSchema, TermSchema
 from src.services.terms import TermsService
-
+from src.utils.handle_db_errors import handle_db_errors
 router = APIRouter()
 
 
 @router.post("/terms")
+@handle_db_errors
 async def add_term(
         term: TermAddSchema,
         term_services: TermsService = Depends(terms_services)
@@ -19,6 +20,7 @@ async def add_term(
 
 
 @router.get("/terms")
+@handle_db_errors
 async def get_terms(
         term_services: TermsService = Depends(terms_services)
 ) -> list[TermSchema]:
@@ -27,6 +29,7 @@ async def get_terms(
 
 
 @router.get("/terms/{term_id}")
+@handle_db_errors
 async def get_term(
         term_id: str,
         term_services: TermsService = Depends(terms_services)
@@ -43,6 +46,7 @@ async def get_term(
 
 
 @router.delete("/terms/{term_id}")
+@handle_db_errors
 async def delete_term(
         term_id: str,
         term_services: TermsService = Depends(terms_services)
@@ -59,6 +63,7 @@ async def delete_term(
 
 
 @router.put("/terms/{term_id}")
+@handle_db_errors
 async def update_term(
         term_id: str,
         data: TermAddSchema = Body(),

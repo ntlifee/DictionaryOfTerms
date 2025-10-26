@@ -5,6 +5,7 @@ from src.schemas.term import TermSchema
 from src.models.audio import Audio
 from src.models.image import Image
 
+
 class Term(Base):
     id: Mapped[str_pk]
     name: Mapped[str]
@@ -17,8 +18,8 @@ class Term(Base):
     )
 
     # связи ORM (удобно при запросах)
-    image: Mapped[Image] = relationship(back_populates="terms_with_image")
-    audio: Mapped[Audio] = relationship(back_populates="terms_with_audio")
+    image: Mapped[Image | None] = relationship(back_populates="terms")
+    audio: Mapped[Audio | None] = relationship(back_populates="terms")
 
     def to_model(self) -> TermSchema:
         return TermSchema(
